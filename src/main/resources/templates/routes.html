@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Start</td>
+            <td>Finish</td>
+        </tr>
+        </thead>
+        <tbody th:each="route : ${routes}">
+        <tr>
+            <td th:text="${route.id}"></td>
+            <td th:text="${route.startPoint}"></td>
+            <td th:text="${route.finishPoint}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!--    <span th:text="${city.name}">city name = </span>-->
+    <!--    <form th:action="@{/cities/del/{id} (id=${city.id})}">-->
+    <!--        &lt;!&ndash;        <input type="hidden" th:value="${city.id}">&ndash;&gt;-->
+    <!--        <input type="submit" value="Delete">-->
+    <!--    </form>-->
+    <!--    <br>-->
+</div>
+
+</body>
+</html>
