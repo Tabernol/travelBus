@@ -11,15 +11,13 @@
         <thead>
         <tr>
             <td>Id</td>
-            <td>Start</td>
-            <td>Finish</td>
+            <td>name</td>
         </tr>
         </thead>
         <tbody th:each="route : ${routes}">
         <tr>
             <td th:text="${route.id}"></td>
-            <td th:text="${route.startPoint}"></td>
-            <td th:text="${route.finishPoint}"></td>
+            <td th:text="${route.routeName}"></td>
         </tr>
         </tbody>
     </table>

@@ -2,13 +2,19 @@ package com.example.travelbus.service;
 
 import com.example.travelbus.data.entity.City;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface CityService {
 
-    List<City> getAll();
+    Iterable<City> getAll();
 
-    void addCity(City city);
+    Optional<City> getCity(Long id);
+
+    City saveCity(City city);
 
     void deleteCity(Long id);
+
+    City updateCity(City city);
+
+
 }

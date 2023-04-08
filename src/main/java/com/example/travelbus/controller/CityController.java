@@ -1,40 +1,51 @@
 package com.example.travelbus.controller;
 
 import com.example.travelbus.data.entity.City;
+import com.example.travelbus.dto.CityDto;
+import com.example.travelbus.dto.service.CityDtoService;
 import com.example.travelbus.service.CityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-public class CityController {
-    private CityService cityService;
+import java.util.List;
 
-    public CityController(CityService cityService) {
+@RestController
+@Slf4j
+public class CityController {
+    private final CityService cityService;
+    private final CityDtoService cityDtoService;
+
+    public CityController(CityService cityService, CityDtoService cityDtoService) {
         this.cityService = cityService;
+        this.cityDtoService = cityDtoService;
     }
 
     @GetMapping("/cities")
-    public String getAll(Model model) {
-        model.addAttribute("newCity",new City());
-        model.addAttribute("cities", cityService.getAll());
-        return "cities";
+    public List<CityDto> getAll(Model model) {
+        return cityDtoService.toDto(cityService.getAll());
     }
-    @GetMapping("/cities/toAdd")
-    public String toAddCity(Model model){
-        model.addAttribute("newCity",new City());
-        return "addCity";
+
+    @GetMapping("/cities/{id}")
+    public CityDto getCity(@PathVariable Long id) {
+        return cityDtoService.toDto(cityService.getCity(id).orElse(new City()));
     }
-    @PostMapping("/cities/toAdd")
-    public String addCity(@ModelAttribute("newCity") City city){
-        System.out.println(city.getName());
-        cityService.addCity(city);
-        return "redirect:/cities";
+
+    @PostMapping("/cities")
+    public CityDto addCity(@RequestBody CityDto cityDto) {
+        City city = cityDtoService.toEntity(cityDto);
+        return cityDtoService.toDto(cityService.saveCity(city));
     }
-    @GetMapping("/cities/del/{id}")
-    public String deleteCity(@PathVariable("id") Long id){
-        System.out.println("delete city");
+
+    @PatchMapping("/cities/{id}")
+    public CityDto updateCity(@PathVariable Long id, @RequestBody CityDto cityDto) {
+        City city = cityDtoService.toEntity(cityDto);
+        return cityDtoService.toDto(cityService.saveCity(city));
+    }
+
+    @DeleteMapping("/cities/{id}")
+    public void deleteCity(@PathVariable("id") Long id) {
         cityService.deleteCity(id);
-        return "redirect:/cities";
     }
 }

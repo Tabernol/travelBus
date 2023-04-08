@@ -6,6 +6,7 @@ import com.example.travelbus.service.CityService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CityServiceImp implements CityService {
@@ -16,16 +17,26 @@ public class CityServiceImp implements CityService {
         this.cityRepo = cityRepo;
     }
 
-    public List<City> getAll() {
+    public Iterable<City> getAll() {
         return cityRepo.findAll();
     }
 
-    public void addCity(City city){
-        cityRepo.save(city);
+    @Override
+    public Optional<City> getCity(Long id) {
+        return cityRepo.findById(id);
+    }
+
+    public City saveCity(City city){
+        return cityRepo.save(city);
     }
 
     @Override
     public void deleteCity(Long id) {
         cityRepo.deleteById(id);
+    }
+
+    @Override
+    public City updateCity(City city) {
+        return cityRepo.save(city);
     }
 }
