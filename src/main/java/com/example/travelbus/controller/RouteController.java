@@ -1,18 +1,15 @@
 package com.example.travelbus.controller;
 
 import com.example.travelbus.data.entity.Route;
+import com.example.travelbus.dto.dto.RouteDto;
 import com.example.travelbus.service.RouteService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 public class RouteController {
 
     private final RouteService routeService;
@@ -22,18 +19,29 @@ public class RouteController {
     }
 
     @GetMapping("/routes")
-    public String getAll(Model model) {
-        model.addAttribute("routes", routeService.getAll());
-        log.info("get routes ");
-        return "routes";
+    public @ResponseBody List<RouteDto> getAll() {
+        return routeService.getAll();
     }
 
     @GetMapping("/routes/{id}")
-    public String get(@PathVariable Long id, Model model) {
-        log.info(String.valueOf(id));
-        model.addAttribute("rou", routeService.getRoute(id).get());
-        return "route";
+    public @ResponseBody RouteDto get(@PathVariable Long id) {
+        log.info(id.toString());
+        return routeService.getRoute(id);
     }
 
+    @PostMapping("/routes")
+    public @ResponseBody RouteDto post(@RequestBody RouteDto routeDto) {
+        return routeService.saveRoute(routeDto);
+    }
+
+    @DeleteMapping("/routes/{id}")
+    public void delete(@PathVariable Long id){
+        routeService.deleteRoute(id);
+    }
+
+    @PatchMapping("/routes/{id}")
+    public @ResponseBody RouteDto update(@RequestBody RouteDto routeDto){
+        return routeService.saveRoute(routeDto);
+    }
 
 }

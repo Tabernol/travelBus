@@ -1,19 +1,24 @@
 package com.example.travelbus.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 //@ToString(exclude = {"routeCities", "startRoutes", "finishRoutes"})
 @Builder
 @Entity
 @Table(name = "city")
-public class City {
+public class City implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,11 +30,11 @@ public class City {
 //    @ToString.Exclude
 //    private List<RouteCity> routCities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "startPoint")
-    @ToString.Exclude
+    @OneToMany(mappedBy = "startPoint", orphanRemoval = true)
+    @JsonIgnore
     private List<Route> startRoutes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "finishPoint")
-    @ToString.Exclude
+    @OneToMany(mappedBy = "finishPoint", orphanRemoval = true)
+    @JsonIgnore
     private List<Route> finishRoutes = new ArrayList<>();
 }

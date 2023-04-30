@@ -1,6 +1,7 @@
 package com.example.travelbus.service;
 
 import com.example.travelbus.data.entity.Route;
+import com.example.travelbus.dto.dto.RouteDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +9,11 @@ import java.util.Optional;
 
 public interface RouteService {
 
-    Iterable<Route> getAll();
+    List<RouteDto> getAll();
 
-    void addRoute(Route route);
+    RouteDto saveRoute(RouteDto routeDto);
 
     void deleteRoute(Long id);
 
-    Optional<Route> getRoute(Long id);
+    RouteDto getRoute(Long id);
 }
