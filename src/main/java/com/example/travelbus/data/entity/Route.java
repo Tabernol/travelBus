@@ -37,4 +37,7 @@ public class Route implements Serializable {
 //    @OneToMany(mappedBy = "route")
 //    @ToString.Exclude
 //    private List<RouteCity> routCities = new ArrayList<>();
+
+    @OneToMany
+    private List<Race> races;
 }

@@ -1,4 +1,4 @@
-package com.example.travelbus.dto;
+package com.example.travelbus.service;
 
 import java.util.List;
 

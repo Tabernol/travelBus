@@ -24,7 +24,7 @@ public class RouteController {
     }
 
     @GetMapping("/routes/{id}")
-    public @ResponseBody RouteDto get(@PathVariable Long id) {
+    public @ResponseBody RouteDto get(@PathVariable("id") Long id) {
         log.info(id.toString());
         return routeService.getRoute(id);
     }
@@ -35,7 +35,7 @@ public class RouteController {
     }
 
     @DeleteMapping("/routes/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable("id") Long id){
         routeService.deleteRoute(id);
     }
 

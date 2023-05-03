@@ -1,7 +1,7 @@
 package com.example.travelbus.service.impl;
 
 import com.example.travelbus.data.entity.City;
-import com.example.travelbus.dto.DtoService;
+import com.example.travelbus.service.DtoService;
 import com.example.travelbus.dto.dto.CityDto;
 import com.example.travelbus.repo.CityRepo;
 import com.example.travelbus.service.CityService;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CityServiceImp implements CityService, DtoService<CityDto, City> {
