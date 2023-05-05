@@ -28,21 +28,21 @@ public class CityController {
 
     @GetMapping("/cities/{id}")
     public CityDto getCity(@PathVariable Long id) {
-        return cityService.getCity(id);
+        return cityService.get(id);
     }
 
     @PostMapping("/cities")
     public CityDto addCity(@RequestBody CityDto cityDto) {
-        return cityService.saveCity(cityDto);
+        return cityService.save(cityDto);
     }
 
     @PatchMapping("/cities/{id}")
     public CityDto updateCity(@PathVariable Long id, @RequestBody CityDto cityDto) {
-        return cityService.saveCity(cityDto);
+        return cityService.save(cityDto);
     }
 
     @DeleteMapping("/cities/{id}")
     public void deleteCity(@PathVariable("id") Long id) {
-        cityService.deleteCity(id);
+        cityService.delete(id);
     }
 }

@@ -7,13 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface RouteService {
-
+public interface RouteService extends BaseService<RouteDto, Route> {
+    @Override
     List<RouteDto> getAll();
 
-    RouteDto saveRoute(RouteDto routeDto);
-
-    void deleteRoute(Long id);
-
-    RouteDto getRoute(Long id);
 }

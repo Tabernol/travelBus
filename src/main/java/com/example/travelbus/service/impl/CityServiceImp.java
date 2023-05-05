@@ -24,16 +24,16 @@ public class CityServiceImp implements CityService, DtoService<CityDto, City> {
     }
 
     @Override
-    public CityDto getCity(Long id) {
+    public CityDto get(Long id) {
         return toDto(cityRepo.findById(id).orElse(new City()));
     }
 
-    public CityDto saveCity(CityDto cityDto) {
+    public CityDto save(CityDto cityDto) {
         return toDto(cityRepo.save(toEntity(cityDto)));
     }
 
     @Override
-    public void deleteCity(Long id) {
+    public void delete(Long id) {
         cityRepo.deleteById(id);
     }
 

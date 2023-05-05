@@ -5,13 +5,6 @@ import com.example.travelbus.dto.dto.CityDto;
 
 import java.util.Optional;
 
-public interface CityService {
+public interface CityService extends BaseService<CityDto, City>{
 
-    Iterable<CityDto> getAll();
-
-    CityDto getCity(Long id);
-
-    CityDto saveCity(CityDto cityDto);
-
-    void deleteCity(Long id);
 }

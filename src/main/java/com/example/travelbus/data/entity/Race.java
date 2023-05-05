@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "race")
 public class Race {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -20,12 +21,12 @@ public class Race {
 
     //FetchType.EAGER
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "races")
+    @JoinColumn(name = "route_id")
     private Route route;
 
     //FetchType.EAGER
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule")
+    @JoinColumn(name = "bus_id")
     private Bus bus;
 
 

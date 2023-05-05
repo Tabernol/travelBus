@@ -30,18 +30,17 @@ public class RouteServiceImpl implements RouteService, DtoService<RouteDto, Rout
     }
 
     @Override
-    public RouteDto saveRoute(RouteDto routeDto) {
+    public RouteDto save(RouteDto routeDto) {
         return toDto(routeRepo.save(toEntity(routeDto)));
     }
 
     @Override
-    public void deleteRoute(Long id) {
-
+    public void delete(Long id) {
         routeRepo.deleteById(id);
     }
 
     @Override
-    public RouteDto getRoute(Long id) {
+    public RouteDto get(Long id) {
         log.info(routeRepo.findById(id).get().toString());
         return toDto(routeRepo.findById(id).orElse(new Route()));
     }

@@ -26,22 +26,22 @@ public class RouteController {
     @GetMapping("/routes/{id}")
     public @ResponseBody RouteDto get(@PathVariable("id") Long id) {
         log.info(id.toString());
-        return routeService.getRoute(id);
+        return routeService.get(id);
     }
 
     @PostMapping("/routes")
     public @ResponseBody RouteDto post(@RequestBody RouteDto routeDto) {
-        return routeService.saveRoute(routeDto);
+        return routeService.save(routeDto);
     }
 
     @DeleteMapping("/routes/{id}")
     public void delete(@PathVariable("id") Long id){
-        routeService.deleteRoute(id);
+        routeService.delete(id);
     }
 
     @PatchMapping("/routes/{id}")
     public @ResponseBody RouteDto update(@RequestBody RouteDto routeDto){
-        return routeService.saveRoute(routeDto);
+        return routeService.save(routeDto);
     }
 
 }
