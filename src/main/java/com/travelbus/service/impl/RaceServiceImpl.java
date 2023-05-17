@@ -10,6 +10,7 @@ import com.travelbus.service.RaceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +45,9 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public List<Race> getAll() {
-        return null;
+        List<Race> races = new ArrayList<>();
+        raceRepo.findAll().forEach(race -> races.add(race));
+        return races;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class RaceServiceImpl implements RaceService {
         Race race = raceRepo.findById(raceId).orElseThrow();
         Bus bus = busRepo.findById(busId).orElseThrow();
 
-        race.setOrderedTickets(createOrderedTickets(race, bus));
+        race.setOrderedTickets(orderedTicketsService.createOrderedTickets(bus));
         race.setBus(bus);
 
         race = raceRepo.save(race);
@@ -65,22 +68,17 @@ public class RaceServiceImpl implements RaceService {
 
         Long orderTicketsId = race.getOrderedTickets().getId();
 
-        race.setBus(null);
-        race.setOrderedTickets(null);
-        race = raceRepo.save(race);
-
-        orderedTicketsService.delete(orderTicketsId);
+        // ===============================================================
+        // CHECK FOR WAS ORDERED OR BOUGHT TICKETS
+        if (orderedTicketsService.canDeleteOrderedTickets(orderTicketsId)) {
+            race.setBus(null);
+            race.setOrderedTickets(null);
+            race = raceRepo.save(race);
+            orderedTicketsService.delete(orderTicketsId);
+        } else throw new IllegalArgumentException("Tickets were bought or ordered");
 
         return race;
     }
 
 
-    private OrderedTickets createOrderedTickets(Race race, Bus bus) {
-        OrderedTickets orderedTickets = new OrderedTickets();
-        orderedTickets.setCapacitySeats(bus.getCapacitySeats());
-        orderedTickets.setFreeTickets(bus.getCapacitySeats());
-        orderedTickets.setOrderTickets(0);
-        orderedTickets.setBoughtTickets(0);
-        return orderedTicketsService.save(orderedTickets);
-    }
 }
