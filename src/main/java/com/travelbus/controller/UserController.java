@@ -16,6 +16,6 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     public UserDto getUser(@PathVariable(name = "id") Long id) {
-        return userService.get(id);
+        return null;
     }
 }

@@ -1,12 +1,12 @@
 package com.travelbus.controller;
 
-import com.travelbus.dto.dto.CityDto;
+import com.travelbus.data.entity.City;
 import com.travelbus.service.CityService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,26 +19,25 @@ public class CityController {
     }
 
     @GetMapping("/cities")
-    public List<CityDto> getAll(Model model) {
-        List<CityDto> all = new ArrayList<>();
-        cityService.getAll().forEach(cityDto ->all.add(cityDto));
-        return all;
+    public ResponseEntity<List<City>> getAll() {
+        return new ResponseEntity<>(cityService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/cities/{id}")
-    public CityDto getCity(@PathVariable Long id) {
-        return cityService.get(id);
+    public ResponseEntity<City> getCity(@PathVariable Long id) {
+        return new ResponseEntity<>(cityService.get(id), HttpStatus.OK);
     }
 
     @PostMapping("/cities")
-    public CityDto addCity(@RequestBody CityDto cityDto) {
-        return cityService.save(cityDto);
+    public ResponseEntity<City> addCity(@RequestBody City city) {
+        return new ResponseEntity<>(cityService.save(city), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/cities/{id}")
-    public CityDto updateCity(@PathVariable Long id, @RequestBody CityDto cityDto) {
-        return cityService.save(cityDto);
-    }
+//    @PatchMapping("/cities")
+//    public ResponseEntity<CityGetDto> updateCity(@RequestBody CityPostDto cityPostDto) {
+//        City save = cityService.save(cityMapper.cityPostDtoToCity(cityPostDto));
+//        return new ResponseEntity<>(cityMapper.cityToCityGetDto(save), HttpStatus.OK);
+//    }
 
     @DeleteMapping("/cities/{id}")
     public void deleteCity(@PathVariable("id") Long id) {

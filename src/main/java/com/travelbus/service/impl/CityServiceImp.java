@@ -1,8 +1,6 @@
 package com.travelbus.service.impl;
 
 import com.travelbus.data.entity.City;
-import com.travelbus.service.DtoService;
-import com.travelbus.dto.dto.CityDto;
 import com.travelbus.repo.CityRepo;
 import com.travelbus.service.CityService;
 import org.springframework.stereotype.Service;
@@ -11,25 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CityServiceImp implements CityService, DtoService<CityDto, City> {
-
-    private CityRepo cityRepo;
+public class CityServiceImp implements CityService {
+    private final CityRepo cityRepo;
 
     public CityServiceImp(CityRepo cityRepo) {
         this.cityRepo = cityRepo;
     }
 
-    public Iterable<CityDto> getAll() {
-        return toDto(cityRepo.findAll());
+
+    @Override
+    public List<City> getAll() {
+        List<City> cities = new ArrayList<>();
+        cityRepo.findAll().forEach(city -> cities.add(city));
+        return cities;
     }
 
     @Override
-    public CityDto get(Long id) {
-        return toDto(cityRepo.findById(id).orElse(new City()));
+    public City get(Long id) throws IllegalArgumentException{
+        return cityRepo.findById(id).orElseThrow();
     }
 
-    public CityDto save(CityDto cityDto) {
-        return toDto(cityRepo.save(toEntity(cityDto)));
+    @Override
+    public City save(City city) {
+        return cityRepo.save(city);
     }
 
     @Override
@@ -37,38 +39,4 @@ public class CityServiceImp implements CityService, DtoService<CityDto, City> {
         cityRepo.deleteById(id);
     }
 
-    @Override
-    public CityDto toDto(City city) {
-        CityDto cityDto = new CityDto();
-        if (city != null) {
-            cityDto.setId(city.getId());
-            cityDto.setName(city.getName());
-            return cityDto;
-        }
-        return cityDto;
-    }
-
-    @Override
-    public List<CityDto> toDto(Iterable<City> cities) {
-        List<CityDto> cityDtoList = new ArrayList<>();
-        CityDto cityDto;
-        for (City city : cities) {
-            cityDto = new CityDto();
-            cityDto.setId(city.getId());
-            cityDto.setName(city.getName());
-            cityDtoList.add(cityDto);
-        }
-        return cityDtoList;
-    }
-
-    @Override
-    public City toEntity(CityDto cityDto) {
-        City city = new City();
-        if (cityDto != null) {
-            city.setId(cityDto.getId());
-            city.setName(cityDto.getName());
-            return city;
-        }
-        return city;
-    }
 }

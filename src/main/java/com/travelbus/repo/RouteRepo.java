@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface RouteRepo extends CrudRepository<Route, Long> {
 
     Route getRouteByStartPointAndFinishPoint(City startPoint, City finishPoint);
+
+    Route getRouteByRouteName(String routeName);
 }

@@ -1,11 +1,11 @@
 package com.travelbus.service;
 
-public interface BaseService <Dto, Entity> {
-    Iterable<Dto> getAll();
+public interface BaseService <Entity> {
+    Iterable<Entity> getAll();
 
-    Dto get(Long id);
+    Entity get(Long id) throws IllegalArgumentException;
 
-    Dto save(Dto dto);
+    Entity save(Entity entity);
 
     void delete(Long id);
 }

@@ -5,7 +5,7 @@ import com.travelbus.dto.dto.BusDto;
 
 import java.util.List;
 
-public interface BusService extends BaseService<BusDto, Bus> {
+public interface BusService extends BaseService<Bus> {
     @Override
-    List<BusDto> getAll();
+    List<Bus> getAll();
 }

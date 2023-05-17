@@ -15,6 +15,7 @@ public class OrderedTicketsController {
     }
     @GetMapping("/order/{id}")
     public OrderedTicketsDto getOrder(@PathVariable(name = "id") Long id){
-        return orderedTicketsService.get(id);
+
+        return null;
     }
 }

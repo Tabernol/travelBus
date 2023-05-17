@@ -1,8 +1,11 @@
 package com.travelbus.controller;
 
+import com.travelbus.data.entity.Bus;
 import com.travelbus.dto.dto.BusDto;
 import com.travelbus.service.BusService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,23 +20,24 @@ public class BusController {
     }
 
     @GetMapping("/buses")
-    public List<BusDto> getAll() {
+    public ResponseEntity<List<Bus>> getAll() {
         log.info(busService.getAll().toString());
-        return busService.getAll();
+        return new ResponseEntity<>(busService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/buses/{id}")
-    public BusDto get(@PathVariable(value = "id") Long id) {
-        return busService.get(id);
+    public ResponseEntity<Bus> get(@PathVariable(value = "id") Long id) {
+        return new ResponseEntity<>(busService.get(id), HttpStatus.OK);
     }
 
     @PostMapping("/buses")
-    public BusDto save(@RequestBody BusDto busDto) {
-        return busService.save(busDto);
+    public ResponseEntity<Bus> save(@RequestBody Bus bus) {
+        return new ResponseEntity<>(busService.save(bus), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/buses/{id}")
     public void delete(@PathVariable Long id) {
+
         busService.delete(id);
     }
 }
