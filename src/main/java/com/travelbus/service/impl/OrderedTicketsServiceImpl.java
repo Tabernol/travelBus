@@ -7,6 +7,7 @@ import com.travelbus.service.OrderedTicketsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class OrderedTicketsServiceImpl implements OrderedTicketsService {
 
@@ -23,16 +24,20 @@ public class OrderedTicketsServiceImpl implements OrderedTicketsService {
 
     @Override
     public OrderedTickets get(Long id) {
-        return null;
+        return orderedTicketsRepo.findById(id).orElseThrow();
     }
 
     @Override
     public OrderedTickets save(OrderedTickets orderedTickets) {
-        return null;
+        return orderedTicketsRepo.save(orderedTickets);
     }
 
     @Override
     public void delete(Long id) {
+        orderedTicketsRepo.deleteById(id);
+    }
 
+    public int deleteAllByRace(Long raceId) {
+        return orderedTicketsRepo.deleteAllByRace(raceId);
     }
 }

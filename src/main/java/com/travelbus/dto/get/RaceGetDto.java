@@ -1,16 +1,14 @@
-package com.travelbus.dto.dto;
+package com.travelbus.dto.get;
 
 import com.travelbus.data.entity.Bus;
 import com.travelbus.data.entity.OrderedTickets;
 import com.travelbus.data.entity.Route;
-import com.travelbus.data.entity.Ticket;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
-public class RaceDto {
+public class RaceGetDto {
     private Long id;
     private String name;
     private LocalDateTime timeStart;

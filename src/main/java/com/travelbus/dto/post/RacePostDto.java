@@ -1,13 +1,12 @@
-package com.travelbus.dto.dto;
+package com.travelbus.dto.post;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 @Data
-public class DtoForCreateRace {
+public class RacePostDto {
     private String raceName;
-    private String routeName;
+    private Long routeId;
     private LocalDateTime timeStart;
     private LocalDateTime timeFinish;
 }

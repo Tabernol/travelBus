@@ -25,7 +25,7 @@ public class CityServiceImp implements CityService {
     }
 
     @Override
-    public City get(Long id) throws IllegalArgumentException{
+    public City get(Long id) {
         return cityRepo.findById(id).orElseThrow();
     }
 

@@ -4,4 +4,5 @@ import com.travelbus.data.entity.OrderedTickets;
 import com.travelbus.dto.dto.OrderedTicketsDto;
 
 public interface OrderedTicketsService extends BaseService<OrderedTickets> {
+    int deleteAllByRace(Long raceId);
 }

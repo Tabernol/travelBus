@@ -31,6 +31,6 @@ public class OrderedTickets {
     private Race race;
 
     @OneToMany(mappedBy = "orderedTickets")
-//    @JsonIgnore
+    @JsonIgnore
     private List<Ticket> ticketList;
 }
