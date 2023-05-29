@@ -1,7 +1,9 @@
 package com.travelbus.service;
 
-import com.travelbus.data.entity.Race;
+import com.travelbus.entity.Race;
+import com.travelbus.dto.post.TicketPostDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface RaceService extends BaseService<Race> {
@@ -15,4 +17,8 @@ public interface RaceService extends BaseService<Race> {
     Race addBusToRace(Long raceId, Long busId);
 
     Race removeBusFromRace(Long raceId);
+
+    Race setPrice(Long raceId, BigDecimal price);
+
+    Race orderedTickets(TicketPostDto ticketPostDto);
 }

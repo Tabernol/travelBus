@@ -1,7 +1,6 @@
 package com.travelbus.service;
 
-import com.travelbus.data.entity.Route;
-import com.travelbus.dto.post.RouteDto;
+import com.travelbus.entity.Route;
 
 import java.util.List;
 

@@ -1,18 +1,19 @@
-package com.travelbus.data.entity;
+package com.travelbus.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "ordered_tickets")
+@Table(name = "holder_tickets")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderedTickets {
+public class HolderTickets {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,12 +26,14 @@ public class OrderedTickets {
     private Integer orderTickets;
     @Column(name = "bought_tickets")
     private Integer boughtTickets;
+    @Column(name = "price")
+    private BigDecimal price;
 
-    @OneToOne(mappedBy = "orderedTickets")
+    @OneToOne(mappedBy = "holderTickets")
     @JsonIgnore
     private Race race;
 
-    @OneToMany(mappedBy = "orderedTickets")
+    @OneToMany(mappedBy = "holderTickets")
     @JsonIgnore
     private List<Ticket> ticketList;
 }

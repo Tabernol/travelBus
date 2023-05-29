@@ -1,11 +1,11 @@
 package com.travelbus.mapper.impl;
 
-import com.travelbus.data.entity.Race;
+import com.travelbus.entity.Race;
 import com.travelbus.dto.get.RaceGetDto;
 import com.travelbus.dto.post.RacePostDto;
 import com.travelbus.mapper.RaceMapper;
 import com.travelbus.service.BusService;
-import com.travelbus.service.OrderedTicketsService;
+import com.travelbus.service.HolderTicketsService;
 import com.travelbus.service.RouteService;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
 public class RaceMapperImpl implements RaceMapper {
     private final RouteService routeService;
     private final BusService busService;
-    private final OrderedTicketsService orderedTicketsService;
+    private final HolderTicketsService holderTicketsService;
 
     public RaceMapperImpl(RouteService routeService,
                           BusService busService,
-                          OrderedTicketsService orderedTicketsService) {
+                          HolderTicketsService holderTicketsService) {
         this.routeService = routeService;
         this.busService = busService;
-        this.orderedTicketsService = orderedTicketsService;
+        this.holderTicketsService = holderTicketsService;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RaceMapperImpl implements RaceMapper {
         raceGetDto.setTimeFinish(race.getTimeFinish());
         raceGetDto.setBus(race.getBus());
         raceGetDto.setRoute(race.getRoute());
-        raceGetDto.setOrderedTickets(race.getOrderedTickets());
+        raceGetDto.setHolderTickets(race.getHolderTickets());
         return raceGetDto;
     }
 }

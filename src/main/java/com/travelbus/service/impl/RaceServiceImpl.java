@@ -1,15 +1,20 @@
 package com.travelbus.service.impl;
 
-import com.travelbus.data.entity.Bus;
-import com.travelbus.data.entity.OrderedTickets;
-import com.travelbus.data.entity.Race;
+import com.travelbus.data.entity.*;
+import com.travelbus.dto.post.TicketPostDto;
+import com.travelbus.entity.*;
 import com.travelbus.repo.BusRepo;
 import com.travelbus.repo.RaceRepo;
-import com.travelbus.service.OrderedTicketsService;
+import com.travelbus.repo.TicketRepo;
+import com.travelbus.service.HolderTicketsService;
 import com.travelbus.service.RaceService;
+import com.travelbus.service.TicketService;
+import com.travelbus.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +22,20 @@ import java.util.List;
 @Slf4j
 public class RaceServiceImpl implements RaceService {
     private final RaceRepo raceRepo;
-    private final OrderedTicketsService orderedTicketsService;
+    private final HolderTicketsService holderTicketsService;
     private final BusRepo busRepo;
 
+    private final TicketService ticketService;
 
-    public RaceServiceImpl(RaceRepo raceRepo, OrderedTicketsService orderedTicketsService, BusRepo busRepo) {
+    private final UserService userService;
+
+
+    public RaceServiceImpl(RaceRepo raceRepo, HolderTicketsService holderTicketsService, BusRepo busRepo, TicketRepo ticketRepo, TicketService ticketService, UserService userService) {
         this.raceRepo = raceRepo;
-        this.orderedTicketsService = orderedTicketsService;
+        this.holderTicketsService = holderTicketsService;
         this.busRepo = busRepo;
+        this.ticketService = ticketService;
+        this.userService = userService;
     }
 
 
@@ -55,7 +66,7 @@ public class RaceServiceImpl implements RaceService {
         Race race = raceRepo.findById(raceId).orElseThrow();
         Bus bus = busRepo.findById(busId).orElseThrow();
 
-        race.setOrderedTickets(orderedTicketsService.createOrderedTickets(bus));
+        race.setHolderTickets(holderTicketsService.createOrderedTickets(bus));
         race.setBus(bus);
 
         race = raceRepo.save(race);
@@ -66,19 +77,74 @@ public class RaceServiceImpl implements RaceService {
     public Race removeBusFromRace(Long raceId) {
         Race race = raceRepo.findById(raceId).orElseThrow();
 
-        Long orderTicketsId = race.getOrderedTickets().getId();
+        Long orderTicketsId = race.getHolderTickets().getId();
 
         // ===============================================================
         // CHECK FOR WAS ORDERED OR BOUGHT TICKETS
-        if (orderedTicketsService.canDeleteOrderedTickets(orderTicketsId)) {
+        if (holderTicketsService.canDeleteOrderedTickets(orderTicketsId)) {
             race.setBus(null);
-            race.setOrderedTickets(null);
+            race.setHolderTickets(null);
             race = raceRepo.save(race);
-            orderedTicketsService.delete(orderTicketsId);
+            holderTicketsService.delete(orderTicketsId);
         } else throw new IllegalArgumentException("Tickets were bought or ordered");
 
         return race;
     }
 
+    public Race setPrice(Long raceId, BigDecimal price) {
+        Race race = get(raceId);
+        race.getHolderTickets().setPrice(price);
+        return save(race);
+    }
+
+
+    public Race orderedTickets(TicketPostDto ticketPostDto) {
+        Race race = get(ticketPostDto.getRaceId());
+        HolderTickets holderTickets = race.getHolderTickets();
+        Integer freeTickets = holderTickets.getFreeTickets();
+
+        if (freeTickets >= ticketPostDto.getCountOfTickets()) {
+            holderTickets.setFreeTickets(freeTickets - ticketPostDto.getCountOfTickets());
+            holderTickets.setOrderTickets(holderTickets.getOrderTickets() + ticketPostDto.getCountOfTickets());
+            race.setHolderTickets(holderTickets);
+            //insert to tickets
+
+            for (Ticket ticket : createTicket(ticketPostDto)) {
+                ticketService.save(ticket);
+            }
+
+            return save(race);
+        }
+        return race;
+
+    }
+
+    private List<Ticket> createTicket(TicketPostDto ticketPostDto) {
+        Race race = get(ticketPostDto.getRaceId());
+        HolderTickets holderTickets = race.getHolderTickets();
+        User user = userService.get(ticketPostDto.getLogin());
+
+
+        int countOfTickets = ticketPostDto.getCountOfTickets();
+        List<Ticket> ticketList = new ArrayList<>();
+
+        Ticket ticket;
+        for (int i = 0; i < countOfTickets; i++) {
+            ticket = new Ticket();
+            ticket.setStatus(Status.ORDERED);
+            ticket.setPrice(holderTickets.getPrice());
+            ticket.setTimeOperation(LocalDateTime.now());
+            ticket.setHolderTickets(holderTickets);
+
+            // take user
+            ticket.setUser(user);
+            ticketList.add(ticket);
+
+        }
+
+        return ticketList;
+
+
+    }
 
 }

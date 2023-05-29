@@ -1,12 +1,10 @@
 package com.travelbus.service.impl;
 
-import com.travelbus.data.entity.User;
-import com.travelbus.dto.dto.UserDto;
+import com.travelbus.entity.User;
 import com.travelbus.repo.UserRepo;
 import com.travelbus.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
@@ -17,21 +15,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<User> getAll() {
-        return null;
+        return userRepo.findAll();
     }
 
     @Override
     public User get(Long id) {
-        return null;
+        return userRepo.findById(id).orElseThrow();
     }
 
     @Override
+    public User get(String login) {
+        return userRepo.findByLogin(login);
+    }
+
+
+
+    @Override
     public User save(User user) {
-        return null;
+        return userRepo.save(user);
     }
 
     @Override
     public void delete(Long id) {
-
+        userRepo.deleteById(id);
     }
+
+
+
 }

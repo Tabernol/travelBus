@@ -1,4 +1,4 @@
-package com.travelbus.data.entity;
+package com.travelbus.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

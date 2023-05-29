@@ -1,8 +1,8 @@
 package com.travelbus.dto.get;
 
-import com.travelbus.data.entity.Bus;
-import com.travelbus.data.entity.OrderedTickets;
-import com.travelbus.data.entity.Route;
+import com.travelbus.entity.Bus;
+import com.travelbus.entity.HolderTickets;
+import com.travelbus.entity.Route;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,5 +15,5 @@ public class RaceGetDto {
     private LocalDateTime timeFinish;
     private Route route;
     private Bus bus;
-    private OrderedTickets orderedTickets;
+    private HolderTickets holderTickets;
 }

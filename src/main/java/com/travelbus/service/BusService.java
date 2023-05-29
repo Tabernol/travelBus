@@ -1,6 +1,6 @@
 package com.travelbus.service;
 
-import com.travelbus.data.entity.Bus;
+import com.travelbus.entity.Bus;
 
 import java.util.List;
 

@@ -1,11 +1,12 @@
-package com.travelbus.data.entity;
+package com.travelbus.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -21,22 +22,20 @@ public class Ticket {
     @Column(name = "number_of_seat")
     private Integer numberOfSeat;
     private BigDecimal price;
+    @Column(name = "time_operation")
+    private LocalDateTime timeOperation;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ordered_tickets_id")
+    @JoinColumn(name = "holder_tickets_id")
     @JsonIgnore
-    private OrderedTickets orderedTickets;
+    private HolderTickets holderTickets;
     @ManyToOne()
     @JoinColumn(name = "passanger")
+    @JsonIgnore
     private User user;
 
 }
 
-enum Status {
-    FREE,
-    ORDERED,
-    BOUGHT
-}

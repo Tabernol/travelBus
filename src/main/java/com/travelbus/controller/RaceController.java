@@ -1,12 +1,13 @@
 package com.travelbus.controller;
 
-import com.travelbus.data.entity.Race;
+import com.travelbus.entity.Race;
+import com.travelbus.dto.dto.HolderTicketsDto;
 import com.travelbus.dto.get.RaceGetDto;
 import com.travelbus.dto.post.RacePostDto;
+import com.travelbus.dto.post.TicketPostDto;
 import com.travelbus.mapper.RaceMapper;
 import com.travelbus.service.RaceService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,16 +47,29 @@ public class RaceController {
         raceService.delete(id);
     }
 
-    @PatchMapping("/races/{raceId}/{busId}")
+    @PatchMapping("/races/{raceId}/bus/{busId}")
     public ResponseEntity<RaceGetDto> addBusToRace(@PathVariable(name = "raceId") Long raceId,
                                                    @PathVariable(name = "busId") Long busId) {
         Race race = raceService.addBusToRace(raceId, busId);
         return new ResponseEntity<>(raceMapper.raceToRaceGetDto(race), HttpStatus.OK);
     }
 
-    @DeleteMapping("/races/bus/{raceId}")
+    @DeleteMapping("/races/{raceId}/bus")
     public ResponseEntity<RaceGetDto> removeBusFromRace(@PathVariable(name = "raceId") Long raceId) {
         Race race = raceService.removeBusFromRace(raceId);
+        return new ResponseEntity<>(raceMapper.raceToRaceGetDto(race), HttpStatus.OK);
+    }
+
+    @PatchMapping("/races/{raceId}/price")
+    public ResponseEntity<RaceGetDto> setPrice(@PathVariable(name = "raceId") Long raceId,
+                                               @RequestBody HolderTicketsDto holderTicketsDto) {
+        Race race = raceService.setPrice(raceId, holderTicketsDto.getPrice());
+        return new ResponseEntity<>(raceMapper.raceToRaceGetDto(race), HttpStatus.OK);
+    }
+
+    @PostMapping("/races/tickets")
+    public ResponseEntity<RaceGetDto> orderedTickets(@RequestBody TicketPostDto ticketPostDto) {
+        Race race = raceService.orderedTickets(ticketPostDto);
         return new ResponseEntity<>(raceMapper.raceToRaceGetDto(race), HttpStatus.OK);
     }
 

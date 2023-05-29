@@ -1,6 +1,5 @@
-package com.travelbus.data.entity;
+package com.travelbus.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +21,7 @@ public class User {
 
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+//    @JsonIgnore
     private List<Ticket> tickets;
 //    private Role role;
 

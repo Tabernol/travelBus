@@ -1,6 +1,6 @@
 package com.travelbus.service.impl;
 
-import com.travelbus.data.entity.Bus;
+import com.travelbus.entity.Bus;
 import com.travelbus.repo.BusRepo;
 import com.travelbus.service.BusService;
 import org.springframework.stereotype.Service;

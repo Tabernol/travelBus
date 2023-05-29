@@ -1,6 +1,6 @@
 package com.travelbus.mapper;
 
-import com.travelbus.data.entity.Route;
+import com.travelbus.entity.Route;
 import com.travelbus.dto.post.RouteDto;
 
 public interface RouteMapper {

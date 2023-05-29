@@ -1,4 +1,4 @@
-package com.travelbus.data.entity;
+package com.travelbus.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,8 +23,8 @@ public class Race {
     private LocalDateTime timeFinish;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ordered_tickets_id")
-    private OrderedTickets orderedTickets;
+    @JoinColumn(name = "holder_tickets_id")
+    private HolderTickets holderTickets;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "route_id")

@@ -1,6 +1,6 @@
 package com.travelbus.repo;
 
-import com.travelbus.data.entity.City;
+import com.travelbus.entity.City;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

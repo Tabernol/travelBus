@@ -1,7 +1,6 @@
 package com.travelbus.service.impl;
 
-import com.travelbus.data.entity.Route;
-import com.travelbus.dto.post.RouteDto;
+import com.travelbus.entity.Route;
 import com.travelbus.repo.CityRepo;
 import com.travelbus.repo.RouteRepo;
 import com.travelbus.service.RouteService;

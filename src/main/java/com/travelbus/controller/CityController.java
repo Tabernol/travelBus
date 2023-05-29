@@ -1,6 +1,6 @@
 package com.travelbus.controller;
 
-import com.travelbus.data.entity.City;
+import com.travelbus.entity.City;
 import com.travelbus.service.CityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

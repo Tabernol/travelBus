@@ -1,21 +1,18 @@
 package com.travelbus.dto.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.travelbus.data.entity.Race;
-import com.travelbus.data.entity.Ticket;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import com.travelbus.entity.Ticket;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 @Data
-public class OrderedTicketsDto {
+public class HolderTicketsDto {
     private Long id;
     private Integer capacitySeats;
     private Integer freeTickets;
     private Integer orderTickets;
     private Integer boughtTickets;
+    private BigDecimal price;
 
 //    @OneToOne(mappedBy = "orderedTickets")
 //    @JsonIgnore

@@ -1,7 +1,8 @@
 package com.travelbus.service;
 
-import com.travelbus.data.entity.User;
-import com.travelbus.dto.dto.UserDto;
+import com.travelbus.entity.User;
 
 public interface UserService extends BaseService<User> {
+
+    User get(String login);
 }
