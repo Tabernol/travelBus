@@ -1,6 +1,5 @@
 package com.travelbus.service.impl;
 
-import com.travelbus.data.entity.*;
 import com.travelbus.dto.post.TicketPostDto;
 import com.travelbus.entity.*;
 import com.travelbus.repo.BusRepo;
@@ -131,7 +130,6 @@ public class RaceServiceImpl implements RaceService {
         Ticket ticket;
         for (int i = 0; i < countOfTickets; i++) {
             ticket = new Ticket();
-            ticket.setStatus(Status.ORDERED);
             ticket.setPrice(holderTickets.getPrice());
             ticket.setTimeOperation(LocalDateTime.now());
             ticket.setHolderTickets(holderTickets);

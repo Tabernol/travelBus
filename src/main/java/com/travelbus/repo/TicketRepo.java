@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TicketRepo extends CrudRepository<Ticket, Long> {
-    List<Ticket> deleteByStatusAndTimeOperation(Status status, LocalDateTime time);
+//    List<Ticket> deleteByStatusAndTimeOperation(Status status, LocalDateTime time);
 
 }

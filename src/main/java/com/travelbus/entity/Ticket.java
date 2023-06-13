@@ -24,10 +24,6 @@ public class Ticket {
     private BigDecimal price;
     @Column(name = "time_operation")
     private LocalDateTime timeOperation;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "holder_tickets_id")
     @JsonIgnore

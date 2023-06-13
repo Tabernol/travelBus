@@ -28,8 +28,6 @@ public class UserServiceImpl implements UserService {
         return userRepo.findByLogin(login);
     }
 
-
-
     @Override
     public User save(User user) {
         return userRepo.save(user);
